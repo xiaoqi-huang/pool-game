@@ -63,21 +63,22 @@ public class Ball extends Circle {
         Double positionX = getCenterX();
         Double positionY = getCenterY();
         Double radius = getRadius();
+        Double rHole =  1.6 * 2 * radius;
 
         positionX += velocityX;
-        if ((positionX + radius >= table.getX()) && (positionY > 16) && (positionY < table.getY() - 16)) {
+        if ((positionX + radius >= table.getX()) && (positionY > rHole) && (positionY < table.getY() - rHole)) {
             positionX = table.getX() - radius;
             velocityX *= -1;
-        } else if ((positionX - radius < 0) && (positionY > 16) && (positionY < table.getY() - 16)) {
+        } else if ((positionX - radius < 0) && (positionY > rHole) && (positionY < table.getY() - rHole)) {
             positionX = 0 + radius;
             velocityX *= -1;
         }
 
         positionY += velocityY;
-        if ((positionY + radius >= table.getY()) && ((positionX > 16 && positionX < table.getX() / 2 - 8) || (positionX > table.getX() / 2 + 8 && positionX < table.getX() - 16))) {
+        if ((positionY + radius >= table.getY()) && ((positionX > rHole && positionX < table.getX() / 2 - rHole / 2) || (positionX > table.getX() / 2 + rHole / 2 && positionX < table.getX() - rHole))) {
             positionY = table.getY() - radius;
             velocityY *= -1;
-        } else if ((positionY - radius < 0) && ((positionX > 16 && positionX < table.getX() / 2 - 8) || (positionX > table.getX() / 2 + 8 && positionX < table.getX() - 16))) {
+        } else if ((positionY - radius < 0) && ((positionX > rHole && positionX < table.getX() / 2 - rHole / 2) || (positionX > table.getX() / 2 + rHole / 2 && positionX < table.getX() - rHole))) {
             positionY = 0 + radius;
             velocityY *= -1;
         }
@@ -103,5 +104,9 @@ public class Ball extends Circle {
         Double yB = ball.getCenterY();
 
         return Math.sqrt(Math.pow(xA - xB, 2) + Math.pow(yA - yB, 2));
+    }
+
+    public boolean isMoving() {
+        return (velocityX != 0) && (velocityY != 0);
     }
 }

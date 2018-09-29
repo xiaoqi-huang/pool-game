@@ -63,6 +63,10 @@ public class Main extends Application {
                             stop();
                         } else {
                             System.out.println("One ball gets into the pocket!");
+                            if (clean()) {
+                                System.out.println("SUCCESS!");
+                                stop();
+                            }
                             continue;
                         }
                     }
@@ -178,7 +182,7 @@ public class Main extends Application {
     }
 
     private boolean cue_ball_moving() {
-        return (balls.get(0).getVelocityX() != 0) || (balls.get(0).getVelocityY() != 0);
+        return cueBall.isMoving();
     }
 
     private Ball getCueBall() {
@@ -254,4 +258,7 @@ public class Main extends Application {
         return (x < 0) || (x > table.getX()) || (y < 0) || (y > table.getY());
     }
 
+    public boolean clean() {
+        return balls.size() == 1;
+    }
 }

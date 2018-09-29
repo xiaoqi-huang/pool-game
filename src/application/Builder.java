@@ -1,8 +1,5 @@
 package application;
 
-import javafx.scene.paint.Paint;
-import javafx.scene.shape.Circle;
-
 import java.util.ArrayList;
 
 public class Builder {
