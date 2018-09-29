@@ -32,7 +32,7 @@ public class Main extends Application {
     private Double mouseX;
     private Double mouseY;
     private Group root;
-    private Line stick;
+    private Stick stick;
 
     @Override
     public void start(final Stage primaryStage) throws Exception{
@@ -153,7 +153,7 @@ public class Main extends Application {
                     mouseX = event.getX();
                     mouseY = event.getY();
 
-                    stick = setStick();
+                    stick = new Stick(cueBall, mouseX, mouseY);
                     root.getChildren().add(stick);
                 }
             }
@@ -181,31 +181,6 @@ public class Main extends Application {
         return (balls.get(0).getVelocityX() != 0) || (balls.get(0).getVelocityY() != 0);
     }
 
-    private Line setStick() {
-
-        Ball ball = cueBall;
-
-        if (cueBall == null) {
-            // TODO: throw an exception
-            return null;
-        }
-
-        Double ballX = ball.getCenterX();
-        Double ballY = ball.getCenterY();
-
-        Double radioX = (mouseX - ballX) / Math.sqrt(Math.pow(ballX - mouseX, 2) + Math.pow(ballY - mouseY, 2));
-        Double radioY = (mouseY - ballY) / Math.sqrt(Math.pow(ballX - mouseX, 2) + Math.pow(ballY - mouseY, 2));
-
-        Line line = new Line();
-        line.setStartX(ballX + 20 * radioX);
-        line.setStartY(ballY + 20 * radioY);
-        line.setEndX(ballX + 320 * radioX);
-        line.setEndY(ballY + 320 * radioY);
-        line.setStroke(Color.BROWN);
-        line.setStrokeWidth(5);
-        return line;
-    }
-
     private Ball getCueBall() {
         return balls.get(0);
     }
@@ -220,7 +195,7 @@ public class Main extends Application {
         hole1.getPoints().addAll(new Double[]{
                 0.0, 1.6 * 2 * radius,
                 0.0, 0.0,
-                1.6 * radius, 0.0
+                1.6 * 2 * radius, 0.0
         });
         hole1.setStrokeWidth(5);
 
