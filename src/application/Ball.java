@@ -1,16 +1,18 @@
 package application;
 
+import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
 
-public class Ball {
+public class Ball extends Circle {
 
-    private Circle circle;
     private Double velocityX;
     private Double velocityY;
     private Double mass;
 
-    public Ball(Circle circle, Double velocityX, Double velocityY, Double mass) {
-        this.circle = circle;
+    public Ball(String colour, Double positionX, Double positionY, Double radius, Double velocityX, Double velocityY, Double mass) {
+
+        super(positionX, positionY, radius);
+        setFill(Paint.valueOf(colour));
         this.velocityX = velocityX;
         this.velocityY = velocityY;
         this.mass = mass;
@@ -23,10 +25,6 @@ public class Ball {
 
     public void setVelocityY(Double velocityY) {
         this.velocityY = velocityY;
-    }
-
-    public Circle getCircle() {
-        return circle;
     }
 
     public Double getVelocityX() {
@@ -62,9 +60,9 @@ public class Ball {
             velocityY = (velocityY > 0) ? 0 : velocityY;
         }
 
-        Double positionX = circle.getCenterX();
-        Double positionY = circle.getCenterY();
-        Double radius = circle.getRadius();
+        Double positionX = getCenterX();
+        Double positionY = getCenterY();
+        Double radius = getRadius();
 
         positionX += velocityX;
         if ((positionX + radius >= table.getX()) && (positionY > 16) && (positionY < table.getY() - 16)) {
@@ -85,7 +83,25 @@ public class Ball {
         }
 
         // RENDER
-        circle.setCenterX(positionX);
-        circle.setCenterY(positionY);
+        setCenterX(positionX);
+        setCenterY(positionY);
+    }
+
+    public boolean overlap(Ball ball) {
+
+        Double rA = getRadius();
+        Double rB = ball.getRadius();
+
+        return distance(ball) <= (rA + rB);
+    }
+
+    public Double distance(Ball ball) {
+
+        Double xA = getCenterX();
+        Double yA = getCenterY();
+        Double xB = ball.getCenterX();
+        Double yB = ball.getCenterY();
+
+        return Math.sqrt(Math.pow(xA - xB, 2) + Math.pow(yA - yB, 2));
     }
 }
