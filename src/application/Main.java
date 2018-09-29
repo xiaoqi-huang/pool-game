@@ -13,10 +13,13 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
+import javafx.scene.shape.Polyline;
+import javafx.scene.shape.Shape;
 import javafx.stage.Stage;
 import javafx.util.Pair;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class Main extends Application {
 
@@ -31,15 +34,34 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("application.fxml"));
+        Parent h = FXMLLoader.load(getClass().getResource("application.fxml"));
 
         setup(primaryStage);
 
         AnimationTimer animator = new AnimationTimer() {
             @Override
             public void handle(long arg0) {
-                for (Ball ball : balls) {
+
+                Iterator<Ball> iter = balls.iterator();
+
+                while (iter.hasNext()) {
+
+                    Ball ball = iter.next();
+
                     ball.move(table);
+
+                    if (in_hole(ball)) {
+                        if (ball == getCueBall()) {
+                            System.out.println("Oops! Cue ball gets into a pocket!");
+                            stop();
+                        } else {
+                            System.out.println("One ball gets into a pocket!");
+                            iter.remove();
+                            root.getChildren().remove(ball.getCircle());
+                            // remove_ball(ball);
+                            continue;
+                        }
+                    }
 
                     for (Ball b : balls) {
 
@@ -88,6 +110,9 @@ public class Main extends Application {
         System.out.println(table.getColour());
         Scene scene = new Scene(root, table.getX(), table.getY());
         scene.setFill(Paint.valueOf(table.getColour()));
+
+        // Set holes
+        root.getChildren().addAll(holes());
 
         BallsConfigReader ballsConfigReader = (BallsConfigReader) ConfigReader.getConfigReader("Balls");
         BallsData ballsData = (BallsData) ballsConfigReader.parse(path);
@@ -174,5 +199,80 @@ public class Main extends Application {
 
     private Ball getCueBall() {
         return balls.get(0);
+    }
+
+    private ArrayList<Shape> holes() {
+
+        ArrayList<Shape> holes = new ArrayList<Shape>();
+        Long width = table.getX();
+        Long height = table.getY();
+
+        Polyline hole1 = new Polyline();
+        hole1.getPoints().addAll(new Double[]{
+                0.0, 16.0,
+                0.0, 0.0,
+                16.0, 0.0
+        });
+        hole1.setStrokeWidth(5);
+
+        Line hole2 = new Line();
+        hole2.setStartX(width / 2 - 8);
+        hole2.setStartY(0);
+        hole2.setEndX(width / 2 + 8);
+        hole2.setEndY(0);
+        hole2.setStrokeWidth(5);
+
+        Polyline hole3 = new Polyline();
+        hole3.getPoints().addAll(new Double[]{
+                Double.valueOf(width - 16), 0.0,
+                Double.valueOf(width), 0.0,
+                Double.valueOf(width), 16.0,
+        });
+        hole3.setStrokeWidth(5);
+
+        Polyline hole4 = new Polyline();
+        hole4.getPoints().addAll(new Double[]{
+                0.0, Double.valueOf(height - 16),
+                0.0, Double.valueOf(height),
+                16.0, Double.valueOf(height)
+        });
+        hole4.setStrokeWidth(5);
+
+        Line hole5 = new Line();
+        hole5.setStartX(width / 2 - 8);
+        hole5.setStartY(height);
+        hole5.setEndX(width / 2 + 8);
+        hole5.setEndY(height);
+        hole5.setStrokeWidth(5);
+
+        Polyline hole6 = new Polyline();
+        hole6.getPoints().addAll(new Double[]{
+                Double.valueOf(width - 16), Double.valueOf(height),
+                Double.valueOf(width), Double.valueOf(height),
+                Double.valueOf(width), Double.valueOf(height - 16),
+        });
+        hole6.setStrokeWidth(5);
+
+        holes.add(hole1);
+        holes.add(hole2);
+        holes.add(hole3);
+        holes.add(hole4);
+        holes.add(hole5);
+        holes.add(hole6);
+        return holes;
+    }
+
+    public boolean in_hole(Ball ball) {
+
+        Double x = ball.getCircle().getCenterX();
+        Double y = ball.getCircle().getCenterY();
+
+        return (x < 0) || (x > table.getX()) || (y < 0) || (y > table.getY());
+    }
+
+    private void remove_ball(Ball ball) {
+        root.getChildren().remove(ball.getCircle());
+        balls.remove(ball);
+        System.out.println("removing... " + balls.size());
     }
 }

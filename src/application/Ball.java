@@ -67,19 +67,19 @@ public class Ball {
         Double radius = circle.getRadius();
 
         positionX += velocityX;
-        if (positionX + radius >= table.getX()) {
+        if ((positionX + radius >= table.getX()) && (positionY > 16) && (positionY < table.getY() - 16)) {
             positionX = table.getX() - radius;
             velocityX *= -1;
-        } else if (positionX - radius < 0) {
+        } else if ((positionX - radius < 0) && (positionY > 16) && (positionY < table.getY() - 16)) {
             positionX = 0 + radius;
             velocityX *= -1;
         }
 
         positionY += velocityY;
-        if (positionY + radius >= table.getY()) {
+        if ((positionY + radius >= table.getY()) && ((positionX > 16 && positionX < table.getX() / 2 - 8) || (positionX > table.getX() / 2 + 8 && positionX < table.getX() - 16))) {
             positionY = table.getY() - radius;
             velocityY *= -1;
-        } else if (positionY - radius < 0) {
+        } else if ((positionY - radius < 0) && ((positionX > 16 && positionX < table.getX() / 2 - 8) || (positionX > table.getX() / 2 + 8 && positionX < table.getX() - 16))) {
             positionY = 0 + radius;
             velocityY *= -1;
         }
