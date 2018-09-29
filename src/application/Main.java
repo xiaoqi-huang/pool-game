@@ -25,6 +25,7 @@ public class Main extends Application {
 
     private TableData table = null;
     private ArrayList<Ball> balls = null;
+    private Ball cueBall = null;
 
     private long startTime;
     private Double mouseX;
@@ -51,14 +52,16 @@ public class Main extends Application {
                     ball.move(table);
 
                     if (in_hole(ball)) {
-                        if (ball == getCueBall()) {
+                        // Remove the ball that goes into a pocket
+                        iter.remove();
+                        root.getChildren().remove(ball.getCircle());
+
+                        if (ball == cueBall) {
+                            cueBall = null;
                             System.out.println("Oops! Cue ball gets into a pocket!");
                             stop();
                         } else {
-                            System.out.println("One ball gets into a pocket!");
-                            iter.remove();
-                            root.getChildren().remove(ball.getCircle());
-                            // remove_ball(ball);
+                            System.out.println("One ball gets into the pocket!");
                             continue;
                         }
                     }
@@ -114,6 +117,7 @@ public class Main extends Application {
         // Set holes
         root.getChildren().addAll(holes());
 
+        // Set balls
         BallsConfigReader ballsConfigReader = (BallsConfigReader) ConfigReader.getConfigReader("Balls");
         BallsData ballsData = (BallsData) ballsConfigReader.parse(path);
 
@@ -125,6 +129,9 @@ public class Main extends Application {
         for (Ball ball : balls) {
             root.getChildren().add(ball.getCircle());
         }
+
+        // Set the cue ball
+        cueBall = getCueBall();
 
         stage.setTitle("Pool Game");
         stage.setScene(scene);
@@ -180,7 +187,13 @@ public class Main extends Application {
 
     private Line setStick() {
 
-        Ball ball = getCueBall();
+        Ball ball = cueBall;
+
+        if (cueBall == null) {
+            // TODO: throw an exception
+            return null;
+        }
+
         Double ballX = ball.getCircle().getCenterX();
         Double ballY = ball.getCircle().getCenterY();
 
@@ -270,9 +283,4 @@ public class Main extends Application {
         return (x < 0) || (x > table.getX()) || (y < 0) || (y > table.getY());
     }
 
-    private void remove_ball(Ball ball) {
-        root.getChildren().remove(ball.getCircle());
-        balls.remove(ball);
-        System.out.println("removing... " + balls.size());
-    }
 }
