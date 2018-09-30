@@ -4,8 +4,10 @@ public class Director {
 
     public void createBalls(Builder builder, BallsData data) {
 
+        double radius = data.getRadius();
+
         for (BallData d : data.getBalls()) {
-            builder.createBall(d);
+            ((BallBuilder) builder).createBall(d, radius);
         }
     }
 }

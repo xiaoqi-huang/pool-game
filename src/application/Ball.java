@@ -5,11 +5,11 @@ import javafx.scene.shape.Circle;
 
 public class Ball extends Circle {
 
-    private Double velocityX;
-    private Double velocityY;
-    private Double mass;
+    private double velocityX;
+    private double velocityY;
+    private double mass;
 
-    public Ball(String colour, Double positionX, Double positionY, Double radius, Double velocityX, Double velocityY, Double mass) {
+    public Ball(String colour, double positionX, double positionY, double radius, double velocityX, double velocityY, double mass) {
 
         super(positionX, positionY, radius);
         setFill(Paint.valueOf(colour));
@@ -19,51 +19,36 @@ public class Ball extends Circle {
     }
 
     // TODO: setter
-    public void setVelocityX(Double velocityX) {
-        this.velocityX = velocityX;
-    }
+    public void setVelocityX(double velocityX) { this.velocityX = velocityX; }
 
-    public void setVelocityY(Double velocityY) {
+    public void setVelocityY(double velocityY) {
         this.velocityY = velocityY;
     }
 
-    public Double getVelocityX() {
+    public double getVelocityX() {
         return velocityX;
     }
 
-    public Double getVelocityY() {
+    public double getVelocityY() {
         return velocityY;
     }
 
-    public Double getMass() {
+    public double getMass() {
         return mass;
     }
 
     public void move(TableData table) {
 
-        Double acc = table.getFriction() / mass;
+        double acc = table.getFriction() / mass;
 
         // UPDATE
-        if (velocityX > 0) {
-            velocityX = velocityX - acc * (Math.abs(velocityX) / Math.sqrt(Math.pow(velocityX, 2) + Math.pow(velocityY, 2)));
-            velocityX = (velocityX < 0) ? 0 : velocityX;
-        } else if (velocityX < 0) {
-            velocityX = velocityX + acc * (Math.abs(velocityX) / Math.sqrt(Math.pow(velocityX, 2) + Math.pow(velocityY, 2)));
-            velocityX = (velocityX > 0) ? 0 : velocityX;
-        }
+        velocityX = updateVelocity(velocityX, acc);
+        velocityY = updateVelocity(velocityY, acc);
 
-        if (velocityY > 0) {
-            velocityY = velocityY - acc * (Math.abs(velocityY) / Math.sqrt(Math.pow(velocityX, 2) + Math.pow(velocityY, 2)));
-            velocityY = (velocityY < 0) ? 0 : velocityY;
-        } else if (velocityY < 0) {
-            velocityY = velocityY + acc * (Math.abs(velocityY) / Math.sqrt(Math.pow(velocityX, 2) + Math.pow(velocityY, 2)));
-            velocityY = (velocityY > 0) ? 0 : velocityY;
-        }
-
-        Double positionX = getCenterX();
-        Double positionY = getCenterY();
-        Double radius = getRadius();
-        Double rHole =  1.6 * 2 * radius;
+        double positionX = getCenterX();
+        double positionY = getCenterY();
+        double radius = getRadius();
+        double rHole =  1.6 * 2 * radius;
 
         positionX += velocityX;
         if ((positionX + radius >= table.getX()) && (positionY > rHole) && (positionY < table.getY() - rHole)) {
@@ -96,7 +81,7 @@ public class Ball extends Circle {
         return distance(ball) <= (rA + rB);
     }
 
-    public Double distance(Ball ball) {
+    public double distance(Ball ball) {
 
         Double xA = getCenterX();
         Double yA = getCenterY();
@@ -108,5 +93,16 @@ public class Ball extends Circle {
 
     public boolean isMoving() {
         return (velocityX != 0) && (velocityY != 0);
+    }
+
+    public Double updateVelocity(Double vel, Double acc) {
+        if (vel > 0) {
+            vel = vel - acc * (Math.abs(vel) / Math.sqrt(Math.pow(velocityX, 2) + Math.pow(velocityY, 2)));
+            vel = (vel < 0) ? 0 : vel;
+        } else if (vel < 0) {
+            vel = vel + acc * (Math.abs(vel) / Math.sqrt(Math.pow(velocityX, 2) + Math.pow(velocityY, 2)));
+            vel = (vel > 0) ? 0 : vel;
+        }
+        return vel;
     }
 }

@@ -9,9 +9,7 @@ import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
-import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Polyline;
 import javafx.scene.shape.Shape;
@@ -19,6 +17,7 @@ import javafx.stage.Stage;
 import javafx.util.Pair;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 
 public class Main extends Application {
@@ -52,24 +51,6 @@ public class Main extends Application {
 
                     ball.move(table);
 
-                    if (in_hole(ball)) {
-                        // Remove the ball that goes into a pocket
-                        iter.remove();
-                        root.getChildren().remove(ball);
-
-                        if (ball == cueBall) {
-                            cueBall = null;
-                            System.out.println("Oops! Cue ball gets into a pocket!");
-                            stop();
-                        } else {
-                            System.out.println("One ball gets into the pocket!");
-                            if (clean()) {
-                                System.out.println("SUCCESS!");
-                                stop();
-                            }
-                            continue;
-                        }
-                    }
 
                     Iterator<Ball> iter2 = balls.iterator();
 
@@ -79,6 +60,25 @@ public class Main extends Application {
 
                         if (ball == b) {
                             continue;
+                        }
+
+                        if (in_hole(ball)) {
+                            // Remove the ball that goes into a pocket
+                            iter.remove();
+                            root.getChildren().remove(ball);
+
+                            if (ball == cueBall) {
+                                cueBall = null;
+                                System.out.println("Oops! Cue ball gets into a pocket!");
+                                stop();
+                            } else {
+                                System.out.println("One ball gets into the pocket!");
+                                if (clean()) {
+                                    System.out.println("SUCCESS!");
+                                    stop();
+                                }
+                                continue;
+                            }
                         }
 
                         if (ball.overlap(b)) {
@@ -100,6 +100,7 @@ public class Main extends Application {
                             b.setVelocityY(vels.getValue().getY());
                         }
                     }
+
                 }
             }
         };
@@ -124,21 +125,20 @@ public class Main extends Application {
         Scene scene = new Scene(root, table.getX(), table.getY());
         scene.setFill(Paint.valueOf(table.getColour()));
 
-        // Set holes
-        root.getChildren().addAll(holes());
+        // Create pockets
+        root.getChildren().addAll(getPockets());
 
-        // Set balls
+        // Create balls
         BallsConfigReader ballsConfigReader = (BallsConfigReader) ConfigReader.getConfigReader("Balls");
         BallsData ballsData = (BallsData) ballsConfigReader.parse(path);
+        ballsData.setRadius(radius);
 
-        Builder builder = new Builder();
         Director director = new Director();
+        BallBuilder builder = new BallBuilder();
         director.createBalls(builder, ballsData);
         balls = builder.getResult();
 
-        for (Ball ball : balls) {
-            root.getChildren().add(ball);
-        }
+        root.getChildren().addAll(balls);
 
         // Set the cue ball
         cueBall = getCueBall();
@@ -189,65 +189,17 @@ public class Main extends Application {
         return balls.get(0);
     }
 
-    private ArrayList<Shape> holes() {
+    private ArrayList<Shape> getPockets() {
 
-        ArrayList<Shape> holes = new ArrayList<Shape>();
-        Long width = table.getX();
-        Long height = table.getY();
+        ArrayList<Shape> pockets = new ArrayList<Shape>();
 
-        Polyline hole1 = new Polyline();
-        hole1.getPoints().addAll(new Double[]{
-                0.0, 1.6 * 2 * radius,
-                0.0, 0.0,
-                1.6 * 2 * radius, 0.0
-        });
-        hole1.setStrokeWidth(5);
+        PocketFactory cornerPocketFactory = PocketFactory.getFactory("Corner");
+        pockets.addAll(cornerPocketFactory.getPockets(radius, table.getX(), table.getY()));
 
-        Line hole2 = new Line();
-        hole2.setStartX(width / 2 - 1.6 * 2 * radius / 2);
-        hole2.setStartY(0);
-        hole2.setEndX(width / 2 + 1.6 * 2 * radius / 2);
-        hole2.setEndY(0);
-        hole2.setStrokeWidth(5);
+        PocketFactory sidePocketFactory = PocketFactory.getFactory("Side");
+        pockets.addAll(sidePocketFactory.getPockets(radius, table.getX(), table.getY()));
 
-        Polyline hole3 = new Polyline();
-        hole3.getPoints().addAll(new Double[]{
-                Double.valueOf(width - 1.6 * 2 * radius), 0.0,
-                Double.valueOf(width), 0.0,
-                Double.valueOf(width), 1.6 * 2 * radius,
-        });
-        hole3.setStrokeWidth(5);
-
-        Polyline hole4 = new Polyline();
-        hole4.getPoints().addAll(new Double[]{
-                0.0, Double.valueOf(height - 1.6 * 2 * radius),
-                0.0, Double.valueOf(height),
-                1.6 * 2 * radius, Double.valueOf(height)
-        });
-        hole4.setStrokeWidth(5);
-
-        Line hole5 = new Line();
-        hole5.setStartX(width / 2 - 1.6 * 2 * radius / 2);
-        hole5.setStartY(height);
-        hole5.setEndX(width / 2 + 1.6 * 2 * radius / 2);
-        hole5.setEndY(height);
-        hole5.setStrokeWidth(5);
-
-        Polyline hole6 = new Polyline();
-        hole6.getPoints().addAll(new Double[]{
-                Double.valueOf(width - 1.6 * 2 * radius), Double.valueOf(height),
-                Double.valueOf(width), Double.valueOf(height),
-                Double.valueOf(width), Double.valueOf(height - 1.6 * 2 * radius),
-        });
-        hole6.setStrokeWidth(5);
-
-        holes.add(hole1);
-        holes.add(hole2);
-        holes.add(hole3);
-        holes.add(hole4);
-        holes.add(hole5);
-        holes.add(hole6);
-        return holes;
+        return pockets;
     }
 
     public boolean in_hole(Ball ball) {
