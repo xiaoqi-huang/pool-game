@@ -9,10 +9,11 @@ import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 import javafx.scene.shape.Shape;
 import javafx.stage.Stage;
 
@@ -49,8 +50,10 @@ public class Main extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
 
-        hit(scene);
+        // Enable hitting the cue ball
+        hit();
 
+        // Update positions of balls
         AnimationTimer animator = new AnimationTimer() {
             @Override
             public void handle(long arg0) {
@@ -71,7 +74,9 @@ public class Main extends Application {
                             iter.remove();
                             root.getChildren().remove(ball);
                             System.out.println("Oops! Cue ball gets into a pocket!");
+
                             stop();
+                            primaryStage.close();
                             break;
                         case 2:
                             iter.remove();
@@ -88,13 +93,13 @@ public class Main extends Application {
         };
 
         animator.start();
-
     }
 
     /**
-     * This method sets up the scene
-     * 1. Read config.json
-     * 2. Create table, pockets, balls, button -> attach them to the root
+     * This method is used to setup the scene.
+     * Read config.json first.
+     * Then, create table, pockets, balls, button
+     * @param root This is the root to which nodes are attached
      * @return a Scene containing the root
      */
     private Scene setupScene(Group root) {
@@ -122,8 +127,8 @@ public class Main extends Application {
         Director director = new Director();
         BallBuilder builder = new BallBuilder();
         director.createBalls(builder, bData);
-
-        root.getChildren().addAll(builder.getResult());
+        balls = builder.getResult();
+        root.getChildren().addAll(balls);
 
 
         // Set the cue ball
@@ -139,7 +144,14 @@ public class Main extends Application {
         return scene;
     }
 
-    private void hit(Scene scene) {
+    /**
+     * This method allows the player to hit the cue ball with the cue stick.
+     * The cue ball can be hit only when it is not moving.
+     * When the cue ball is hit, the states of all balls is recorded for the undo functionality.
+     * The direction of the force is determined by the position where the mouse is pressed;
+     * The magnitude of the force is determined by the length of the time the mouse is pressed.
+     */
+    private void hit() {
 
         table.addEventFilter(MouseEvent.MOUSE_PRESSED, new EventHandler<MouseEvent>() {
             @Override
@@ -197,7 +209,8 @@ public class Main extends Application {
     }
 
     private Table getTable(TableData data) {
-        return new Table(data.getColour(), data.getX(), data.getY(), data.getFriction());
+        table = new Table(data.getColour(), data.getX(), data.getY(), data.getFriction());
+        return table;
     }
 
     private ArrayList<Shape> getPockets() {
