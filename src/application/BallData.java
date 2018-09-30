@@ -1,15 +1,17 @@
 package application;
 
+import javafx.scene.paint.Color;
+
 public class BallData implements Data {
 
-    private String colour;
+    private Color colour;
     private Double positionX;
     private Double positionY;
     private Double velocityX;
     private Double velocityY;
     private Double mass;
 
-    public BallData(String colour, Double positionX, Double positionY, Double velocityX, Double velocityY, Double mass) {
+    public BallData(Color colour, Double positionX, Double positionY, Double velocityX, Double velocityY, Double mass) {
         this.colour = colour;
         this.positionX = positionX;
         this.positionY = positionY;
@@ -18,7 +20,7 @@ public class BallData implements Data {
         this.mass = mass;
     }
 
-    public void setColour(String colour) {
+    public void setColour(Color colour) {
         this.colour = colour;
     }
 
@@ -42,7 +44,7 @@ public class BallData implements Data {
         this.mass = mass;
     }
 
-    public String getColour() {
+    public Color getColour() {
         return colour;
     }
 

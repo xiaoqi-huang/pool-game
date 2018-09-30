@@ -15,10 +15,10 @@ public class Ball extends Circle {
     private double velocityY;
     private double mass;
 
-    public Ball(String colour, double positionX, double positionY, double radius, double velocityX, double velocityY, double mass) {
+    public Ball(Color colour, double positionX, double positionY, double radius, double velocityX, double velocityY, double mass) {
 
         super(positionX, positionY, radius);
-        setFill(Paint.valueOf(colour));
+        setFill(colour);
         this.velocityX = velocityX;
         this.velocityY = velocityY;
         this.mass = mass;
@@ -42,7 +42,7 @@ public class Ball extends Circle {
         return mass;
     }
 
-    public int move(TableData table, ArrayList<Ball> balls) {
+    public int move(Table table, ArrayList<Ball> balls) {
 
         double acc = table.getFriction() / mass;
 
@@ -54,8 +54,8 @@ public class Ball extends Circle {
         double posY = getCenterY();
         double radius = getRadius();
 
-        double width = table.getX();
-        double height = table.getY();
+        double width = table.getWidth();
+        double height = table.getHeight();
         double rc =  (1.6 * 2 * radius) / Math.sqrt(2); // Radius of corner pockets
         double rs = 1.6 * radius; // Radius of side pockets
 
@@ -152,12 +152,12 @@ public class Ball extends Circle {
         return vel;
     }
 
-    private boolean in_hole(TableData table) {
+    private boolean in_hole(Table table) {
 
         Double x = getCenterX();
         Double y = getCenterY();
 
-        return (x < 0) || (x > table.getX()) || (y < 0) || (y > table.getY());
+        return (x < 0) || (x > table.getWidth()) || (y < 0) || (y > table.getHeight());
     }
 
     private boolean isCueBall() {

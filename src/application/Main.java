@@ -2,11 +2,14 @@ package application;
 
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
@@ -18,7 +21,7 @@ import java.util.Iterator;
 
 public class Main extends Application {
 
-    private TableData table = null;
+    private Table table = null;
     private ArrayList<Ball> balls = null;
     private Ball cueBall = null;
     private Stick stick;
@@ -28,6 +31,7 @@ public class Main extends Application {
     private Double mouseX;
     private Double mouseY;
     public Group root;
+    private Caretaker caretaker = new Caretaker();
 
     public static void main(String[] args) {
         launch(args);
@@ -87,44 +91,63 @@ public class Main extends Application {
 
     }
 
+    /**
+     * This method sets up the scene
+     * 1. Read config.json
+     * 2. Create table, pockets, balls, button -> attach them to the root
+     * @return a Scene containing the root
+     */
     private Scene setupScene(Group root) {
 
+        // Load configure file
         String path = "config.json";
 
+        TableConfigReader tConfigReader = (TableConfigReader) ConfigReader.getConfigReader("Table");
+        BallsConfigReader bConfigReader = (BallsConfigReader) ConfigReader.getConfigReader("Balls");
+
+        TableData tData = (TableData) tConfigReader.parse(path);
+        BallsData bData = (BallsData) bConfigReader.parse(path);
+        bData.setRadius(radius);
+
+
         // Set table
-        TableConfigReader tableConfigReader = (TableConfigReader) ConfigReader.getConfigReader("Table");
-        table = (TableData) tableConfigReader.parse(path);
-        Scene scene = new Scene(root, table.getX(), table.getY());
-        scene.setFill(Paint.valueOf(table.getColour()));
+        root.getChildren().add(getTable(tData));
+
 
         // Create pockets
         root.getChildren().addAll(getPockets());
 
-        // Create balls
-        BallsConfigReader ballsConfigReader = (BallsConfigReader) ConfigReader.getConfigReader("Balls");
-        BallsData ballsData = (BallsData) ballsConfigReader.parse(path);
-        ballsData.setRadius(radius);
 
+        // Create balls (builder design pattern)
         Director director = new Director();
         BallBuilder builder = new BallBuilder();
-        director.createBalls(builder, ballsData);
-        balls = builder.getResult();
+        director.createBalls(builder, bData);
 
-        root.getChildren().addAll(balls);
+        root.getChildren().addAll(builder.getResult());
+
 
         // Set the cue ball
         setCueBall();
 
+
+        // Create UNDO button
+        root.getChildren().add(getButton());
+
+
+        Scene scene = new Scene(root, table.getWidth(), table.getHeight() + 27);
+        scene.setFill(Color.BEIGE);
         return scene;
     }
 
     private void hit(Scene scene) {
 
-        scene.addEventFilter(MouseEvent.MOUSE_PRESSED, new EventHandler<MouseEvent>() {
+        table.addEventFilter(MouseEvent.MOUSE_PRESSED, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
 
                 if (!cue_ball_moving()) {
+
+                    save();
 
                     startTime = System.currentTimeMillis();
                     mouseX = event.getX();
@@ -138,7 +161,7 @@ public class Main extends Application {
             }
         });
 
-        scene.addEventFilter(MouseEvent.MOUSE_RELEASED, new EventHandler<MouseEvent>() {
+        table.addEventFilter(MouseEvent.MOUSE_RELEASED, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
                 long endTime = System.currentTimeMillis();
@@ -173,21 +196,92 @@ public class Main extends Application {
         }
     }
 
+    private Table getTable(TableData data) {
+        return new Table(data.getColour(), data.getX(), data.getY(), data.getFriction());
+    }
+
     private ArrayList<Shape> getPockets() {
 
-        double x = table.getX();
-        double y = table.getY();
+        double width = table.getWidth();
+        double height = table.getHeight();
 
         PocketFactory cornerPocketFactory = PocketFactory.getFactory("Corner");
-        ArrayList<Shape> pockets = cornerPocketFactory.getPockets(radius, x, y);
+        ArrayList<Shape> pockets = cornerPocketFactory.getPockets(radius, width, height);
 
         PocketFactory sidePocketFactory = PocketFactory.getFactory("Side");
-        pockets.addAll(sidePocketFactory.getPockets(radius, x, y));
+        pockets.addAll(sidePocketFactory.getPockets(radius, width, height));
 
         return pockets;
     }
 
+    private Button getButton() {
+
+        Button button = new Button("UNDO");
+
+        button.setPrefSize(80, 10);
+        button.setLayoutX(table.getWidth() - 80);
+        button.setLayoutY(table.getHeight());
+        button.setStyle("-fx-background-color: beige");
+
+        // undo function is call when the button is clicked
+        button.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent event) {
+                undo();
+            }
+        });
+
+        return button;
+    }
+
     private boolean clean() {
         return balls.size() == 1;
+    }
+
+    private void save() {
+
+        ArrayList<BallData> data = new ArrayList<BallData>();
+
+        for (Ball ball : balls ) {
+
+            BallData d = new BallData((Color) ball.getFill(), ball.getCenterX(), ball.getCenterY(), ball.getVelocityX(), ball.getVelocityY(), ball.getMass());
+            data.add(d);
+        }
+
+        caretaker.addMemento(new Memento(data));
+    }
+
+    private void undo() {
+
+        if (caretaker.isEmpty()) {
+            return;
+        }
+
+        Iterator<Node> iter = root.getChildren().iterator();
+
+        while (iter.hasNext()) {
+
+            Node node = iter.next();
+
+            if (node instanceof Ball) {
+                iter.remove();
+            }
+        }
+
+        Memento memento = caretaker.getMemento();
+        ArrayList<BallData> data = memento.getState();
+        BallsData ballsData = new BallsData(data);
+        ballsData.setRadius(radius);
+
+        Director director = new Director();
+        BallBuilder builder = new BallBuilder();
+        director.createBalls(builder, ballsData);
+        balls = builder.getResult();
+
+        root.getChildren().addAll(balls);
+
+        // Set the cue ball
+        setCueBall();
     }
 }

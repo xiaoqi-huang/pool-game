@@ -1,5 +1,7 @@
 package application;
 
+import javafx.scene.paint.Color;
+
 import java.util.ArrayList;
 
 public class BallsData implements Data {
@@ -7,7 +9,15 @@ public class BallsData implements Data {
     ArrayList<BallData> balls = new ArrayList<BallData>();
     double radius;
 
-    public void addBall(String colour, Double positionX, Double positionY, Double velocityX, Double velocityY, Double mass) {
+    public BallsData() {
+
+    }
+
+    public BallsData(ArrayList<BallData> balls) {
+        this.balls = balls;
+    }
+
+    public void addBall(Color colour, Double positionX, Double positionY, Double velocityX, Double velocityY, Double mass) {
         BallData ball = new BallData(colour, positionX, positionY, velocityX, velocityY, mass);
         balls.add(ball);
     }

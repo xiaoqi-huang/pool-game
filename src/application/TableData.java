@@ -1,20 +1,22 @@
 package application;
 
+import javafx.scene.paint.Color;
+
 public class TableData implements Data {
 
-    private String colour;
+    private Color colour;
     private Long x;
     private Long y;
     private Double friction;
 
-    public TableData(String colour, Long x, Long y, Double friction) {
+    public TableData(Color colour, Long x, Long y, Double friction) {
         this.colour = colour;
         this.x = x;
         this.y = y;
         this.friction = friction;
     }
 
-    public void setColour(String colour) {
+    public void setColour(Color colour) {
         this.colour = colour;
     }
 
@@ -30,7 +32,7 @@ public class TableData implements Data {
         this.friction = friction;
     }
 
-    public String getColour() {
+    public Color getColour() {
         return colour;
     }
 

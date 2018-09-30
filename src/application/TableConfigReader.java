@@ -1,5 +1,6 @@
 package application;
 
+import javafx.scene.paint.Color;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -39,7 +40,7 @@ public class TableConfigReader extends ConfigReader {
             // This is a double which should affect the rate at which the balls slow down
             Double friction = (Double) jsonTable.get("friction");
 
-            data = new TableData(colour, x, y, friction);
+            data = new TableData(Color.valueOf(colour), x, y, friction);
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();

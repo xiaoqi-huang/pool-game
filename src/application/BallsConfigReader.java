@@ -1,5 +1,6 @@
 package application;
 
+import javafx.scene.paint.Color;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -48,7 +49,7 @@ public class BallsConfigReader extends ConfigReader {
 
                 Double mass = (Double) jsonBall.get("mass");
 
-                data.addBall(colour, positionX, positionY, velocityX, velocityY, mass);
+                data.addBall(Color.valueOf(colour), positionX, positionY, velocityX, velocityY, mass);
             }
 
         } catch (FileNotFoundException e) {
