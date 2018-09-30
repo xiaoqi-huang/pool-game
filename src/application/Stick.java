@@ -17,7 +17,7 @@ public class Stick extends Line {
         setStartY(ballY + 20 * radioY);
         setEndX(ballX + 320 * radioX);
         setEndY(ballY + 320 * radioY);
-        setStroke(Color.BROWN);
+        setStroke(Color.BEIGE);
         setStrokeWidth(5);
     }
 }

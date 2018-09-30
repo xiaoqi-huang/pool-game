@@ -4,20 +4,16 @@ import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Point2D;
 import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
-import javafx.scene.shape.Line;
-import javafx.scene.shape.Polyline;
 import javafx.scene.shape.Shape;
 import javafx.stage.Stage;
-import javafx.util.Pair;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Iterator;
 
 public class Main extends Application {
@@ -25,19 +21,31 @@ public class Main extends Application {
     private TableData table = null;
     private ArrayList<Ball> balls = null;
     private Ball cueBall = null;
+    private Stick stick;
     private Double radius = 10.0;
 
     private long startTime;
     private Double mouseX;
     private Double mouseY;
-    private Group root;
-    private Stick stick;
+    public Group root;
+
+    public static void main(String[] args) {
+        launch(args);
+    }
 
     @Override
     public void start(final Stage primaryStage) throws Exception{
         Parent h = FXMLLoader.load(getClass().getResource("application.fxml"));
 
-        setup(primaryStage);
+        root = new Group();
+
+        Scene scene = setupScene(root);
+
+        primaryStage.setTitle("Pool Game");
+        primaryStage.setScene(scene);
+        primaryStage.show();
+
+        hit(scene);
 
         AnimationTimer animator = new AnimationTimer() {
             @Override
@@ -49,58 +57,28 @@ public class Main extends Application {
 
                     Ball ball = iter.next();
 
-                    ball.move(table);
+                    int res = ball.move(table, balls);
 
-
-                    Iterator<Ball> iter2 = balls.iterator();
-
-                    while (iter2.hasNext()) {
-
-                        Ball b = iter2.next();
-
-                        if (ball == b) {
-                            continue;
-                        }
-
-                        if (in_hole(ball)) {
-                            // Remove the ball that goes into a pocket
+                    switch (res) {
+                        case 0:
+                            break;
+                        case 1:
+                            cueBall = null;
                             iter.remove();
                             root.getChildren().remove(ball);
-
-                            if (ball == cueBall) {
-                                cueBall = null;
-                                System.out.println("Oops! Cue ball gets into a pocket!");
+                            System.out.println("Oops! Cue ball gets into a pocket!");
+                            stop();
+                            break;
+                        case 2:
+                            iter.remove();
+                            root.getChildren().remove(ball);
+                            System.out.println("One ball gets into the pocket!");
+                            if (clean()) {
+                                System.out.println("SUCCESS!");
                                 stop();
-                            } else {
-                                System.out.println("One ball gets into the pocket!");
-                                if (clean()) {
-                                    System.out.println("SUCCESS!");
-                                    stop();
-                                }
-                                continue;
                             }
-                        }
-
-                        if (ball.overlap(b)) {
-
-                            Point2D posA = new Point2D(ball.getCenterX(), ball.getCenterY());
-                            Point2D velA = new Point2D(ball.getVelocityX(), ball.getVelocityY());
-                            double massA = ball.getMass();
-
-                            Point2D posB = new Point2D(b.getCenterX(), b.getCenterY());
-                            Point2D velB = new Point2D(b.getVelocityX(), b.getVelocityY());
-                            double massB = b.getMass();
-
-
-                            Pair<Point2D, Point2D> vels = PhysicsUtility.calculateCollision(posA, velA, massA, posB, velB, massB);
-
-                            ball.setVelocityX(vels.getKey().getX());
-                            ball.setVelocityY(vels.getKey().getY());
-                            b.setVelocityX(vels.getValue().getX());
-                            b.setVelocityY(vels.getValue().getY());
-                        }
+                            break;
                     }
-
                 }
             }
         };
@@ -109,19 +87,13 @@ public class Main extends Application {
 
     }
 
-    public static void main(String[] args) {
-        launch(args);
-    }
-
-    private void setup(Stage stage) {
-
-        root = new Group();
+    private Scene setupScene(Group root) {
 
         String path = "config.json";
 
+        // Set table
         TableConfigReader tableConfigReader = (TableConfigReader) ConfigReader.getConfigReader("Table");
         table = (TableData) tableConfigReader.parse(path);
-        System.out.println(table.getColour());
         Scene scene = new Scene(root, table.getX(), table.getY());
         scene.setFill(Paint.valueOf(table.getColour()));
 
@@ -141,11 +113,12 @@ public class Main extends Application {
         root.getChildren().addAll(balls);
 
         // Set the cue ball
-        cueBall = getCueBall();
+        setCueBall();
 
-        stage.setTitle("Pool Game");
-        stage.setScene(scene);
-        stage.show();
+        return scene;
+    }
+
+    private void hit(Scene scene) {
 
         scene.addEventFilter(MouseEvent.MOUSE_PRESSED, new EventHandler<MouseEvent>() {
             @Override
@@ -157,8 +130,10 @@ public class Main extends Application {
                     mouseX = event.getX();
                     mouseY = event.getY();
 
-                    stick = new Stick(cueBall, mouseX, mouseY);
-                    root.getChildren().add(stick);
+                    if (cueBall != null) {
+                        stick = new Stick(cueBall, mouseX, mouseY);
+                        root.getChildren().add(stick);
+                    }
                 }
             }
         });
@@ -167,9 +142,13 @@ public class Main extends Application {
             @Override
             public void handle(MouseEvent event) {
                 long endTime = System.currentTimeMillis();
+                if (startTime < 0) {
+                    return;
+                }
                 long duration = endTime - startTime;
+                startTime = -1;
 
-                Double velocity = 0.05 * duration;
+                double velocity = 0.05 * duration;
                 velocity = (velocity > 20) ? 20 : velocity;
 
                 Ball cueBall = balls.get(0);
@@ -185,32 +164,30 @@ public class Main extends Application {
         return cueBall.isMoving();
     }
 
-    private Ball getCueBall() {
-        return balls.get(0);
+    private void setCueBall() {
+
+        for (Ball ball : balls) {
+            if (ball.getFill() == Color.WHITE) {
+                cueBall = ball;
+            }
+        }
     }
 
     private ArrayList<Shape> getPockets() {
 
-        ArrayList<Shape> pockets = new ArrayList<Shape>();
+        double x = table.getX();
+        double y = table.getY();
 
         PocketFactory cornerPocketFactory = PocketFactory.getFactory("Corner");
-        pockets.addAll(cornerPocketFactory.getPockets(radius, table.getX(), table.getY()));
+        ArrayList<Shape> pockets = cornerPocketFactory.getPockets(radius, x, y);
 
         PocketFactory sidePocketFactory = PocketFactory.getFactory("Side");
-        pockets.addAll(sidePocketFactory.getPockets(radius, table.getX(), table.getY()));
+        pockets.addAll(sidePocketFactory.getPockets(radius, x, y));
 
         return pockets;
     }
 
-    public boolean in_hole(Ball ball) {
-
-        Double x = ball.getCenterX();
-        Double y = ball.getCenterY();
-
-        return (x < 0) || (x > table.getX()) || (y < 0) || (y > table.getY());
-    }
-
-    public boolean clean() {
+    private boolean clean() {
         return balls.size() == 1;
     }
 }
