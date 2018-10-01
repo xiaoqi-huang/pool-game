@@ -1,5 +1,8 @@
 package application;
 
+/**
+ * Possible states when the game ends.
+ */
 public enum State {
-    FAILURE, SUCCESS
+    SUCCESS, FAILURE, ERROR
 }

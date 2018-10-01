@@ -2,17 +2,20 @@ package application;
 
 import javafx.scene.paint.Color;
 
+/**
+ * BallData stores all data needed fot creating a Ball
+ */
 public class BallData implements Data {
 
     private Color colour;
-    private Double positionX;
-    private Double positionY;
+    private double positionX;
+    private double positionY;
     private double radius;
-    private Double velocityX;
-    private Double velocityY;
-    private Double mass;
+    private double velocityX;
+    private double velocityY;
+    private double mass;
 
-    public BallData(Color colour, Double positionX, Double positionY, double radius, Double velocityX, Double velocityY, Double mass) {
+    public BallData(Color colour, double positionX, double positionY, double radius, double velocityX, double velocityY, double mass) {
         this.colour = colour;
         this.positionX = positionX;
         this.positionY = positionY;
@@ -22,55 +25,35 @@ public class BallData implements Data {
         this.mass = mass;
     }
 
-    public void setColour(Color colour) {
-        this.colour = colour;
-    }
+    // Setter
 
-    public void setPositionX(Double positionX) {
-        this.positionX = positionX;
-    }
+    public void setColour(Color colour) { this.colour = colour; }
 
-    public void setPositionY(Double positionY) {
-        this.positionY = positionY;
-    }
+    public void setPositionX(double positionX) { this.positionX = positionX; }
+
+    public void setPositionY(double positionY) { this.positionY = positionY; }
 
     public void setRadius(double radius) { this.radius = radius; }
 
-    public void setVelocityX(Double velocityX) {
-        this.velocityX = velocityX;
-    }
+    public void setVelocityX(double velocityX) { this.velocityX = velocityX; }
 
-    public void setVelocityY(Double velocityY) {
-        this.velocityY = velocityY;
-    }
+    public void setVelocityY(double velocityY) { this.velocityY = velocityY; }
 
-    public void setMass(Double mass) {
-        this.mass = mass;
-    }
+    public void setMass(double mass) { this.mass = mass; }
 
-    public Color getColour() {
-        return colour;
-    }
+    // Getter
 
-    public Double getPositionX() {
-        return positionX;
-    }
+    public Color getColour() { return colour; }
 
-    public Double getPositionY() {
-        return positionY;
-    }
+    public double getPositionX() { return positionX; }
+
+    public double getPositionY() { return positionY; }
 
     public double getRadius() { return radius; }
 
-    public Double getVelocityX() {
-        return velocityX;
-    }
+    public double getVelocityX() { return velocityX; }
 
-    public Double getVelocityY() {
-        return velocityY;
-    }
+    public double getVelocityY() { return velocityY; }
 
-    public Double getMass() {
-        return mass;
-    }
+    public double getMass() { return mass; }
 }

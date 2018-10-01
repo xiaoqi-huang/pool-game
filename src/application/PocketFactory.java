@@ -4,16 +4,27 @@ import javafx.scene.shape.Shape;
 
 import java.util.ArrayList;
 
+/**
+ * Abstract factory that can produced two types of pocket factory
+ */
 public abstract class PocketFactory {
 
-    public static PocketFactory getFactory(String type) {
+    /**
+     * This returns a concrete pocket factory according to the type asked.
+     * @param type This is the type of pockets required.
+     * @return PocketFactory of specified type
+     */
+    public static PocketFactory getFactory(PocketType type) {
 
         PocketFactory factory = null;
 
-        if (type.equals("Corner")) {
-            factory = new CornerPocketFactory();
-        } else if (type.equals("Side")) {
-            factory = new SidePocketFactory();
+        switch (type) {
+            case CORNER:
+                factory = new CornerPocketFactory();
+                break;
+            case SIDE:
+                factory = new SidePocketFactory();
+                break;
         }
 
         return factory;

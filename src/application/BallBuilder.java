@@ -2,19 +2,22 @@ package application;
 
 import javafx.scene.paint.Color;
 
+/**
+ * Abstract Ball Builder
+ */
 public interface BallBuilder {
 
     public void setColour(Color colour);
 
-    public void setPosX(double posX);
+    public void setPositionX(double positionX);
 
-    public void setPosY(double posY);
+    public void setPositionY(double positionY);
 
     public void setRadius(double radius);
 
-    public void setVelX(double velX);
+    public void setVelocityX(double velocityX);
 
-    public void setVelY(double velY);
+    public void setVelocityY(double velocityY);
 
     public void setMass(double mass);
 }

@@ -2,38 +2,41 @@ package application;
 
 import javafx.scene.paint.Color;
 
+/**
+ * Concrete Ball Builder
+ */
 public class ConcreteBallBuilder implements BallBuilder {
 
     private Color colour;
-    private double posX;
-    private double posY;
+    private double positionX;
+    private double positionY;
     private double radius;
-    private double velX;
-    private double velY;
+    private double velocityX;
+    private double velocityY;
     private double mass;
 
     public void setColour(Color colour) {
         this.colour = colour;
     }
 
-    public void setPosX(double posX) {
-        this.posX = posX;
+    public void setPositionX(double positionX) {
+        this.positionX = positionX;
     }
 
-    public void setPosY(double posY) {
-        this.posY = posY;
+    public void setPositionY(double positionY) {
+        this.positionY = positionY;
     }
 
     public void setRadius(double radius) {
         this.radius = radius;
     }
 
-    public void setVelX(double velX) {
-        this.velX = velX;
+    public void setVelocityX(double velocityX) {
+        this.velocityX = velocityX;
     }
 
-    public void setVelY(double velY) {
-        this.velY = velY;
+    public void setVelocityY(double velocityY) {
+        this.velocityY = velocityY;
     }
 
     public void setMass(double mass) {
@@ -41,6 +44,6 @@ public class ConcreteBallBuilder implements BallBuilder {
     }
 
     public Ball getBall() {
-        return new Ball(colour, posX, posY, radius, velX, velY, mass);
+        return new Ball(colour, positionX, positionY, radius, velocityX, velocityY, mass);
     }
 }

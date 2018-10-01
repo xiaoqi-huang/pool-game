@@ -5,12 +5,19 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
+/**
+ * A Configure Reader that only reads data about Table in a configure file
+ */
 public class TableConfigReader extends ConfigReader {
 
+    /**
+     * This method looks into the configure file, extracts data about Table and store them in a TableData.
+     * @param path This is the path for the JSON file.
+     * @return TableData containing all data read from the JSON file
+     */
     @Override
     public Data parse(String path) {
 
@@ -42,11 +49,7 @@ public class TableConfigReader extends ConfigReader {
 
             data = new TableData(Color.valueOf(colour), x, y, friction);
 
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ParseException e) {
+        } catch (IOException | ParseException e) {
             e.printStackTrace();
         }
 

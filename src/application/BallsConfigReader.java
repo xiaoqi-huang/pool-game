@@ -10,11 +10,21 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
+/**
+ * A Configure Reader that only reads data about Balls in a configure file
+ */
 public class BallsConfigReader extends ConfigReader {
 
     // The radius is not specified in the specification.
     private double radius = 10.0;
 
+    /**
+     * This method looks into the configure file, extracts data about Balls.
+     * The data of each Ball is stored in its own BallData.
+     * Then all BallDatas are put in a BallsData.
+     * @param path This is the path for the JSON file.
+     * @return BallsData containing all data read from the JSON file
+     */
     @Override
     public Data parse(String path) {
 
@@ -56,11 +66,7 @@ public class BallsConfigReader extends ConfigReader {
                 balls.add(ball);
             }
 
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ParseException e) {
+        } catch (IOException | ParseException e) {
             e.printStackTrace();
         }
 

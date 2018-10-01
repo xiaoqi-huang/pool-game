@@ -1,15 +1,18 @@
 package application;
 
+/**
+ * Director that directs the BallBuilder
+ */
 public class Director {
 
     public void constructBall(BallBuilder ballBuilder, BallData data) {
 
         ballBuilder.setColour(data.getColour());
-        ballBuilder.setPosX(data.getPositionX());
-        ballBuilder.setPosY(data.getPositionY());
+        ballBuilder.setPositionX(data.getPositionX());
+        ballBuilder.setPositionY(data.getPositionY());
         ballBuilder.setRadius(data.getRadius());
-        ballBuilder.setVelX(data.getVelocityX());
-        ballBuilder.setVelY(data.getVelocityY());
+        ballBuilder.setVelocityX(data.getVelocityX());
+        ballBuilder.setVelocityY(data.getVelocityY());
         ballBuilder.setMass(data.getMass());
     }
 }

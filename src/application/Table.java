@@ -3,6 +3,9 @@ package application;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
+/**
+ * Table in the Pool Game
+ */
 public class Table extends Rectangle {
 
     private double friction;
@@ -14,7 +17,7 @@ public class Table extends Rectangle {
         this.friction = friction;
     }
 
-    public double getFriction() {
-        return friction;
-    }
+    public void setFriction(double friction) { this.friction = friction; }
+
+    public double getFriction() { return friction; }
 }

@@ -2,6 +2,9 @@ package application;
 
 import javafx.scene.shape.Line;
 
+/**
+ * Side Pocket on the Table
+ */
 public class SidePocket extends Line implements Pocket {
 
     public SidePocket(double x1, double y1, double x2, double y2) {
