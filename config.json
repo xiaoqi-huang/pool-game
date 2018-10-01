@@ -25,7 +25,7 @@
         "colour": "red",
         "position": {
           "x": 50.0,
-          "y": 90.0
+          "y": 10.0
         },
         "velocity": {
           "x": 0.0,

@@ -9,32 +9,33 @@ import java.util.ArrayList;
 
 public class Ball extends Circle {
 
-    private double velocityX;
-    private double velocityY;
+    private double velX;
+    private double velY;
     private double mass;
 
-    public Ball(Color colour, double positionX, double positionY, double radius, double velocityX, double velocityY, double mass) {
+    public Ball(Color colour, double positionX, double positionY, double radius, double velX, double velY, double mass) {
 
         super(positionX, positionY, radius);
+
         setFill(colour);
-        this.velocityX = velocityX;
-        this.velocityY = velocityY;
+        this.velX = velX;
+        this.velY = velY;
         this.mass = mass;
     }
 
-    public void setVelocityX(double velocityX) { this.velocityX = velocityX; }
+    public void setVelocityX(double velX) { this.velX = velX; }
 
-    public void setVelocityY(double velocityY) {
-        this.velocityY = velocityY;
+    public void setVelocityY(double velY) {
+        this.velY = velY;
     }
 
     public void setMass(double mass) { this.mass = mass; }
 
     public double getVelocityX() {
-        return velocityX;
+        return velX;
     }
 
-    public double getVelocityY() { return velocityY; }
+    public double getVelocityY() { return velY; }
 
     public double getMass() {
         return mass;
@@ -45,8 +46,8 @@ public class Ball extends Circle {
         double acc = table.getFriction() / mass;
 
         // UPDATE
-        velocityX = updateVelocity(velocityX, acc);
-        velocityY = updateVelocity(velocityY, acc);
+        velX = updateVelocity(velX, acc);
+        velY = updateVelocity(velY, acc);
 
         double posX = getCenterX();
         double posY = getCenterY();
@@ -57,22 +58,22 @@ public class Ball extends Circle {
         double rc =  (1.6 * 2 * radius) / Math.sqrt(2); // Radius of corner pockets
         double rs = 1.6 * radius; // Radius of side pockets
 
-        posX += velocityX;
+        posX += velX;
         if ((posX + radius >= width) && (posY > rc) && (posY < height - rc)) {
             posX = width - radius;
-            velocityX *= -1;
+            velX *= -1;
         } else if ((posX - radius < 0) && (posY > rc) && (posY < height - rc)) {
             posX = radius;
-            velocityX *= -1;
+            velX *= -1;
         }
 
-        posY += velocityY;
+        posY += velY;
         if ((posY + radius >= height) && ((posX > rc && posX < (width / 2 - rs)) || (posX > (width / 2 + rs) && posX < width - rc))) {
             posY = height - radius;
-            velocityY *= -1;
+            velY *= -1;
         } else if ((posY - radius < 0) && ((posX > rc && posX < (width / 2 - rs)) || (posX > (width / 2 + rs) && posX < width - rc))) {
             posY = radius;
-            velocityY *= -1;
+            velY *= -1;
         }
 
         // RENDER
@@ -88,11 +89,9 @@ public class Ball extends Circle {
         }
 
 
-        for (Ball ball : balls) {
+        for (int index = balls.indexOf(this); index < balls.size(); index++) {
 
-            if (this == ball) {
-                continue;
-            }
+            Ball ball = balls.get(index);
 
             if (overlap(ball)) {
 
@@ -119,8 +118,8 @@ public class Ball extends Circle {
 
     private boolean overlap(Ball ball) {
 
-        Double rA = getRadius();
-        Double rB = ball.getRadius();
+        double rA = getRadius();
+        double rB = ball.getRadius();
 
         return distance(ball) <= (rA + rB);
     }
@@ -136,15 +135,15 @@ public class Ball extends Circle {
     }
 
     boolean isMoving() {
-        return (velocityX != 0) && (velocityY != 0);
+        return (velX != 0) && (velY != 0);
     }
 
     private Double updateVelocity(Double vel, Double acc) {
         if (vel > 0) {
-            vel = vel - acc * (Math.abs(vel) / Math.sqrt(Math.pow(velocityX, 2) + Math.pow(velocityY, 2)));
+            vel = vel - acc * (Math.abs(vel) / Math.sqrt(Math.pow(velX, 2) + Math.pow(velY, 2)));
             vel = (vel < 0) ? 0 : vel;
         } else if (vel < 0) {
-            vel = vel + acc * (Math.abs(vel) / Math.sqrt(Math.pow(velocityX, 2) + Math.pow(velocityY, 2)));
+            vel = vel + acc * (Math.abs(vel) / Math.sqrt(Math.pow(velX, 2) + Math.pow(velY, 2)));
             vel = (vel > 0) ? 0 : vel;
         }
         return vel;
