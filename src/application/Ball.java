@@ -2,12 +2,10 @@ package application;
 
 import javafx.geometry.Point2D;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
 import javafx.util.Pair;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 
 public class Ball extends Circle {
 
@@ -30,13 +28,13 @@ public class Ball extends Circle {
         this.velocityY = velocityY;
     }
 
+    public void setMass(double mass) { this.mass = mass; }
+
     public double getVelocityX() {
         return velocityX;
     }
 
-    public double getVelocityY() {
-        return velocityY;
-    }
+    public double getVelocityY() { return velocityY; }
 
     public double getMass() {
         return mass;
@@ -81,7 +79,7 @@ public class Ball extends Circle {
         setCenterX(posX);
         setCenterY(posY);
 
-        if (in_hole(table)) {
+        if (inPocket(table)) {
             if (isCueBall()) {
                 return 1;
             } else {
@@ -152,7 +150,7 @@ public class Ball extends Circle {
         return vel;
     }
 
-    private boolean in_hole(Table table) {
+    private boolean inPocket(Table table) {
 
         Double x = getCenterX();
         Double y = getCenterY();
@@ -162,5 +160,24 @@ public class Ball extends Circle {
 
     private boolean isCueBall() {
         return getFill() == Color.WHITE;
+    }
+
+    public void pocket(Table table, int count) {
+         setCenterX(count * 2 * getRadius() + getRadius() + 1);
+         setCenterY(table.getHeight() + getRadius() + 3);
+    }
+
+    public void copy(BallData data) {
+        setFill(data.getColour());
+        setCenterX(data.getPositionX());
+        setCenterY(data.getPositionY());
+        setRadius(data.getRadius());
+        setVelocityX(data.getVelocityX());
+        setVelocityY(data.getVelocityY());
+        setMass(data.getMass());
+    }
+
+    public boolean isPocketed(Table table) {
+        return getCenterY() > table.getHeight();
     }
 }

@@ -2,13 +2,20 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="">
+      <change afterPath="$PROJECT_DIR$/src/application/ConcreteBallBuilder.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PoolGame/application/Main$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PoolGame/application/Main$2.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PoolGame/application/Main$3.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PoolGame/application/Main$4.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PoolGame/application/Main.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/PoolGame/application/Builder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/application/Ball.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/application/Ball.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/application/BallBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/application/BallBuilder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/application/BallData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/application/BallData.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/application/BallsConfigReader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/application/BallsConfigReader.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/application/BallsData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/application/BallsData.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/application/Builder.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/application/CornerPocket.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/application/CornerPocket.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/application/Director.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/application/Director.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/application/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/application/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/application/Memento.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/application/Memento.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/application/SidePocket.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/application/SidePocket.java" afterDir="false" />
     </list>
     <ignored path="JavaFxApplication.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -70,13 +77,13 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="java" value="53" />
+          <entry key="java" value="63" />
           <entry key="json" value="2" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="JAVA" value="53" />
+          <entry key="JAVA" value="63" />
           <entry key="JSON" value="2" />
         </counts>
       </usages-collector>
@@ -87,15 +94,15 @@
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="CSS" value="3" />
-          <entry key="JAVA" value="14492" />
+          <entry key="JAVA" value="16267" />
           <entry key="JSON" value="71" />
-          <entry key="PLAIN_TEXT" value="11" />
+          <entry key="PLAIN_TEXT" value="34" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="dummy" value="11" />
-          <entry key="java" value="14495" />
+          <entry key="dummy" value="34" />
+          <entry key="java" value="16270" />
           <entry key="json" value="71" />
         </counts>
       </usages-collector>
@@ -109,14 +116,15 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/application/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="210">
-              <caret line="78" column="41" selection-start-line="78" selection-start-column="41" selection-end-line="78" selection-end-column="41" />
+            <state relative-caret-position="257">
+              <caret line="56" lean-forward="true" selection-start-line="56" selection-end-line="56" />
               <folding>
                 <element signature="imports" expanded="true" />
+                <element signature="e#653#659#0" expanded="true" />
                 <element signature="e#955#956#0" expanded="true" />
                 <element signature="e#983#984#0" expanded="true" />
-                <element signature="e#1401#2624#0" expanded="true" />
-                <element signature="e#2623#2624#0" expanded="true" />
+                <element signature="e#1515#3017#0" expanded="true" />
+                <element signature="e#3016#3017#0" expanded="true" />
                 <element signature="e#4200#4755#0" expanded="true" />
                 <element signature="e#4754#4755#0" expanded="true" />
                 <element signature="e#4815#5754#0" expanded="true" />
@@ -129,6 +137,33 @@
                 <element signature="e#7266#7267#0" expanded="true" />
                 <element signature="e#7344#7354#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/application/Director.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="30">
+              <caret line="2" column="23" lean-forward="true" selection-start-line="2" selection-start-column="23" selection-end-line="2" selection-end-column="23" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/application/BallData.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="540">
+              <caret line="48" column="5" lean-forward="true" selection-start-line="48" selection-start-column="5" selection-end-line="48" selection-end-column="5" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/application/CornerPocket.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="90">
+              <caret line="6" column="91" lean-forward="true" selection-start-line="6" selection-start-column="91" selection-end-line="6" selection-end-column="91" />
             </state>
           </provider>
         </entry>
@@ -152,45 +187,10 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/application/PhysicsUtility.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="576">
-              <caret line="60" column="73" lean-forward="true" selection-start-line="60" selection-start-column="73" selection-end-line="60" selection-end-column="73" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/application/TableData.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="330">
-              <caret line="26" column="24" selection-start-line="26" selection-start-column="24" selection-end-line="26" selection-end-column="24" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/application/Table.java">
+        <entry file="file://$PROJECT_DIR$/src/application/Memento.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="255">
-              <caret line="17" column="24" selection-start-line="17" selection-start-column="24" selection-end-line="17" selection-end-column="24" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#357#358#0" expanded="true" />
-                <element signature="e#387#388#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/application/BallBuilder.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="210">
-              <caret line="14" selection-start-line="14" selection-end-line="14" />
+              <caret line="19" column="42" selection-start-line="19" selection-start-column="42" selection-end-line="19" selection-end-column="42" />
             </state>
           </provider>
         </entry>
@@ -198,8 +198,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/application/BallsConfigReader.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="674">
-              <caret line="47" column="58" selection-start-line="47" selection-start-column="58" selection-end-line="47" selection-end-column="58" />
+            <state relative-caret-position="636">
+              <caret line="55" column="22" lean-forward="true" selection-start-line="55" selection-start-column="22" selection-end-line="55" selection-end-column="22" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -210,12 +210,14 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/application/Ball.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1594">
-              <caret line="158" selection-start-line="158" selection-end-line="158" />
+            <state relative-caret-position="135">
+              <caret line="9" column="14" selection-start-line="9" selection-start-column="14" selection-end-line="9" selection-end-column="14" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#5181#5182#0" expanded="true" />
                 <element signature="e#5221#5222#0" expanded="true" />
+                <element signature="e#5355#5356#0" expanded="true" />
+                <element signature="e#5397#5398#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -224,14 +226,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/application/BallsData.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="210">
-              <caret line="14" selection-start-line="14" selection-end-line="14" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#138#148#0" expanded="true" />
-                <element signature="e#225#226#0" expanded="true" />
-                <element signature="e#254#255#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="105">
+              <caret line="7" lean-forward="true" selection-start-line="7" selection-end-line="7" />
             </state>
           </provider>
         </entry>
@@ -268,26 +264,27 @@
         <option value="$PROJECT_DIR$/src/application/ConfigReader.java" />
         <option value="$PROJECT_DIR$/src/application/PhysicsUtility.java" />
         <option value="$PROJECT_DIR$/src/application/PocketBuilder.java" />
-        <option value="$PROJECT_DIR$/src/application/CornerPocket.java" />
         <option value="$PROJECT_DIR$/src/application/Pocket.java" />
-        <option value="$PROJECT_DIR$/src/application/SidePocket.java" />
-        <option value="$PROJECT_DIR$/src/application/Director.java" />
-        <option value="$PROJECT_DIR$/src/application/BallBuilder.java" />
-        <option value="$PROJECT_DIR$/src/application/Builder.java" />
         <option value="$PROJECT_DIR$/src/application/CornerPocketFactory.java" />
         <option value="$PROJECT_DIR$/src/application/PocketFactory.java" />
         <option value="$PROJECT_DIR$/src/application/SidePocketFactory.java" />
         <option value="$PROJECT_DIR$/src/application/Stick.java" />
         <option value="$PROJECT_DIR$/config.json" />
-        <option value="$PROJECT_DIR$/src/application/Memento.java" />
-        <option value="$PROJECT_DIR$/src/application/BallData.java" />
-        <option value="$PROJECT_DIR$/src/application/BallsData.java" />
-        <option value="$PROJECT_DIR$/src/application/BallsConfigReader.java" />
         <option value="$PROJECT_DIR$/src/application/TableData.java" />
         <option value="$PROJECT_DIR$/src/application/TableConfigReader.java" />
         <option value="$PROJECT_DIR$/src/application/Table.java" />
-        <option value="$PROJECT_DIR$/src/application/Ball.java" />
         <option value="$PROJECT_DIR$/src/application/Caretaker.java" />
+        <option value="$PROJECT_DIR$/src/application/Builder.java" />
+        <option value="$PROJECT_DIR$/src/application/BallData.java" />
+        <option value="$PROJECT_DIR$/src/application/BallsConfigReader.java" />
+        <option value="$PROJECT_DIR$/src/application/BallsData.java" />
+        <option value="$PROJECT_DIR$/src/application/ConcreteBallBuilder.java" />
+        <option value="$PROJECT_DIR$/src/application/BallBuilder.java" />
+        <option value="$PROJECT_DIR$/src/application/Director.java" />
+        <option value="$PROJECT_DIR$/src/application/Memento.java" />
+        <option value="$PROJECT_DIR$/src/application/SidePocket.java" />
+        <option value="$PROJECT_DIR$/src/application/CornerPocket.java" />
+        <option value="$PROJECT_DIR$/src/application/Ball.java" />
         <option value="$PROJECT_DIR$/src/application/Main.java" />
       </list>
     </option>
@@ -358,7 +355,7 @@
     <property name="OverrideImplement.combined" value="false" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1538325752445" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1538380590441" />
     <property name="dynamic.classpath" value="false" />
     <property name="project.structure.last.edited" value="Libraries" />
     <property name="project.structure.proportion" value="0.15" />
@@ -531,12 +528,12 @@
       <option name="presentableId" value="Default" />
       <updated>1359379246138</updated>
       <workItem from="1359379250712" duration="1302000" />
-      <workItem from="1538142798533" duration="68287000" />
+      <workItem from="1538142798533" duration="73767000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="69589000" />
+    <option name="totallyTimeSpent" value="75069000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -562,8 +559,8 @@
       <window_info anchor="bottom" id="Terminal" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.32970297" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.0" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.25445545" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32970297" />
@@ -663,27 +660,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/application/Director.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="7" lean-forward="true" selection-start-line="7" selection-end-line="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/application/Builder.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="10" lean-forward="true" selection-start-line="10" selection-end-line="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/application/CornerPocket.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="15" lean-forward="true" selection-start-line="15" selection-end-line="15" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/application/CornerPocketFactory.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="165">
@@ -722,13 +698,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/application/SidePocket.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="4" column="47" selection-start-line="4" selection-start-column="47" selection-end-line="4" selection-end-column="47" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_144.jdk/Contents/Home/src.zip!/java/lang/Double.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="345">
@@ -750,56 +719,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="787">
           <caret line="54" column="16" selection-start-line="54" selection-start-column="16" selection-end-line="54" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/application/BallData.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="465">
-          <caret line="41" selection-start-line="41" selection-end-line="41" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/application/Memento.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="8" column="38" selection-start-line="8" selection-start-column="38" selection-end-line="8" selection-end-column="38" />
-          <folding>
-            <element signature="e#106#107#0" expanded="true" />
-            <element signature="e#140#141#0" expanded="true" />
-            <element signature="e#172#173#0" expanded="true" />
-            <element signature="e#200#201#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/application/BallBuilder.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="14" selection-start-line="14" selection-end-line="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/application/BallsData.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="14" selection-start-line="14" selection-end-line="14" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#138#148#0" expanded="true" />
-            <element signature="e#225#226#0" expanded="true" />
-            <element signature="e#254#255#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/application/BallsConfigReader.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="674">
-          <caret line="47" column="58" selection-start-line="47" selection-start-column="58" selection-end-line="47" selection-end-column="58" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -849,6 +768,48 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/application/PhysicsUtility.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="576">
+          <caret line="60" column="73" lean-forward="true" selection-start-line="60" selection-start-column="73" selection-end-line="60" selection-end-column="73" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/application/ConcreteBallBuilder.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="597">
+          <caret line="44" column="5" selection-start-line="44" selection-start-column="5" selection-end-line="44" selection-end-column="5" />
+          <folding>
+            <element signature="e#319#320#0" expanded="true" />
+            <element signature="e#353#354#0" expanded="true" />
+            <element signature="e#393#394#0" expanded="true" />
+            <element signature="e#425#426#0" expanded="true" />
+            <element signature="e#465#466#0" expanded="true" />
+            <element signature="e#497#498#0" expanded="true" />
+            <element signature="e#541#542#0" expanded="true" />
+            <element signature="e#577#578#0" expanded="true" />
+            <element signature="e#617#618#0" expanded="true" />
+            <element signature="e#649#650#0" expanded="true" />
+            <element signature="e#689#690#0" expanded="true" />
+            <element signature="e#721#722#0" expanded="true" />
+            <element signature="e#761#762#0" expanded="true" />
+            <element signature="e#793#794#0" expanded="true" />
+            <element signature="e#822#823#0" expanded="true" />
+            <element signature="e#898#899#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/application/BallBuilder.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="5" lean-forward="true" selection-start-line="5" selection-end-line="5" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/application/Caretaker.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="150">
@@ -865,10 +826,52 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/application/PhysicsUtility.java">
+    <entry file="file://$PROJECT_DIR$/src/application/Director.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="576">
-          <caret line="60" column="73" lean-forward="true" selection-start-line="60" selection-start-column="73" selection-end-line="60" selection-end-column="73" />
+        <state relative-caret-position="30">
+          <caret line="2" column="23" lean-forward="true" selection-start-line="2" selection-start-column="23" selection-end-line="2" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/application/BallsData.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="7" lean-forward="true" selection-start-line="7" selection-end-line="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/application/SidePocket.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="18" lean-forward="true" selection-start-line="18" selection-end-line="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/application/BallData.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="540">
+          <caret line="48" column="5" lean-forward="true" selection-start-line="48" selection-start-column="5" selection-end-line="48" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/application/CornerPocket.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="6" column="91" lean-forward="true" selection-start-line="6" selection-start-column="91" selection-end-line="6" selection-end-column="91" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/application/Memento.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="19" column="42" selection-start-line="19" selection-start-column="42" selection-end-line="19" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/application/BallsConfigReader.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="636">
+          <caret line="55" column="22" lean-forward="true" selection-start-line="55" selection-start-column="22" selection-end-line="55" selection-end-column="22" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -877,26 +880,29 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/application/Ball.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1594">
-          <caret line="158" selection-start-line="158" selection-end-line="158" />
+        <state relative-caret-position="135">
+          <caret line="9" column="14" selection-start-line="9" selection-start-column="14" selection-end-line="9" selection-end-column="14" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#5181#5182#0" expanded="true" />
             <element signature="e#5221#5222#0" expanded="true" />
+            <element signature="e#5355#5356#0" expanded="true" />
+            <element signature="e#5397#5398#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/application/Main.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="78" column="41" selection-start-line="78" selection-start-column="41" selection-end-line="78" selection-end-column="41" />
+        <state relative-caret-position="257">
+          <caret line="56" lean-forward="true" selection-start-line="56" selection-end-line="56" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#653#659#0" expanded="true" />
             <element signature="e#955#956#0" expanded="true" />
             <element signature="e#983#984#0" expanded="true" />
-            <element signature="e#1401#2624#0" expanded="true" />
-            <element signature="e#2623#2624#0" expanded="true" />
+            <element signature="e#1515#3017#0" expanded="true" />
+            <element signature="e#3016#3017#0" expanded="true" />
             <element signature="e#4200#4755#0" expanded="true" />
             <element signature="e#4754#4755#0" expanded="true" />
             <element signature="e#4815#5754#0" expanded="true" />

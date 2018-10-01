@@ -12,10 +12,13 @@ import java.io.IOException;
 
 public class BallsConfigReader extends ConfigReader {
 
+    // The radius is not specified in the specification.
+    private double radius = 10.0;
+
     @Override
     public Data parse(String path) {
 
-        BallsData data = new BallsData();
+        BallsData balls = new BallsData();
 
         JSONParser parser = new JSONParser();
 
@@ -49,7 +52,8 @@ public class BallsConfigReader extends ConfigReader {
 
                 Double mass = (Double) jsonBall.get("mass");
 
-                data.addBall(Color.valueOf(colour), positionX, positionY, velocityX, velocityY, mass);
+                BallData ball = new BallData(Color.valueOf(colour), positionX, positionY, radius, velocityX, velocityY, mass);
+                balls.add(ball);
             }
 
         } catch (FileNotFoundException e) {
@@ -60,6 +64,6 @@ public class BallsConfigReader extends ConfigReader {
             e.printStackTrace();
         }
 
-        return data;
+        return balls;
     }
 }

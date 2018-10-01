@@ -2,12 +2,14 @@ package application;
 
 public class Director {
 
-    public void createBalls(Builder builder, BallsData data) {
+    public void constructBall(BallBuilder ballBuilder, BallData data) {
 
-        double radius = data.getRadius();
-
-        for (BallData d : data.getBalls()) {
-            ((BallBuilder) builder).createBall(d, radius);
-        }
+        ballBuilder.setColour(data.getColour());
+        ballBuilder.setPosX(data.getPositionX());
+        ballBuilder.setPosY(data.getPositionY());
+        ballBuilder.setRadius(data.getRadius());
+        ballBuilder.setVelX(data.getVelocityX());
+        ballBuilder.setVelY(data.getVelocityY());
+        ballBuilder.setMass(data.getMass());
     }
 }

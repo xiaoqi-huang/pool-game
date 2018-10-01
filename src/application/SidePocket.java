@@ -13,6 +13,6 @@ public class SidePocket extends Line implements Pocket {
         setEndX(x2);
         setEndY(y2);
 
-        setStrokeWidth(5.0);
+        setStrokeWidth(4.0);
     }
 }

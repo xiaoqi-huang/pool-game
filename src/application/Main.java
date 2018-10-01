@@ -6,28 +6,25 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Shape;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 
 public class Main extends Application {
 
     private Table table = null;
-    private ArrayList<Ball> balls = null;
+    private ArrayList<Ball> balls = new ArrayList<Ball>();
     private Ball cueBall = null;
     private Stick stick;
     private Double radius = 10.0;
 
+    private int count = 0; // The number of pocketed balls
     private long startTime;
     private Double mouseX;
     private Double mouseY;
@@ -58,11 +55,11 @@ public class Main extends Application {
             @Override
             public void handle(long arg0) {
 
-                Iterator<Ball> iter = balls.iterator();
+                for (Ball ball : balls) {
 
-                while (iter.hasNext()) {
-
-                    Ball ball = iter.next();
+                    if (ball.isPocketed(table)) {
+                        continue;
+                    }
 
                     int res = ball.move(table, balls);
 
@@ -70,17 +67,16 @@ public class Main extends Application {
                         case 0:
                             break;
                         case 1:
+                            ball.pocket(table, count);
                             cueBall = null;
-                            iter.remove();
-                            root.getChildren().remove(ball);
                             System.out.println("Oops! Cue ball gets into a pocket!");
 
                             stop();
                             primaryStage.close();
                             break;
                         case 2:
-                            iter.remove();
-                            root.getChildren().remove(ball);
+                            ball.pocket(table, count);
+                            count++;
                             System.out.println("One ball gets into the pocket!");
                             if (clean()) {
                                 System.out.println("SUCCESS!");
@@ -112,7 +108,6 @@ public class Main extends Application {
 
         TableData tData = (TableData) tConfigReader.parse(path);
         BallsData bData = (BallsData) bConfigReader.parse(path);
-        bData.setRadius(radius);
 
 
         // Set table
@@ -125,9 +120,12 @@ public class Main extends Application {
 
         // Create balls (builder design pattern)
         Director director = new Director();
-        BallBuilder builder = new BallBuilder();
-        director.createBalls(builder, bData);
-        balls = builder.getResult();
+        ConcreteBallBuilder builder = new ConcreteBallBuilder();
+        for (BallData d : bData.getBalls()) {
+            director.constructBall(builder, d);
+            Ball ball = builder.getBall();
+            balls.add(ball);
+        }
         root.getChildren().addAll(balls);
 
 
@@ -139,7 +137,7 @@ public class Main extends Application {
         root.getChildren().add(getButton());
 
 
-        Scene scene = new Scene(root, table.getWidth(), table.getHeight() + 27);
+        Scene scene = new Scene(root, table.getWidth(), table.getHeight() + 24);
         scene.setFill(Color.BEIGE);
         return scene;
     }
@@ -256,13 +254,13 @@ public class Main extends Application {
 
         ArrayList<BallData> data = new ArrayList<BallData>();
 
-        for (Ball ball : balls ) {
+        for (Ball ball : balls) {
 
-            BallData d = new BallData((Color) ball.getFill(), ball.getCenterX(), ball.getCenterY(), ball.getVelocityX(), ball.getVelocityY(), ball.getMass());
+            BallData d = new BallData((Color) ball.getFill(), ball.getCenterX(), ball.getCenterY(), ball.getRadius(), ball.getVelocityX(), ball.getVelocityY(), ball.getMass());
             data.add(d);
         }
 
-        caretaker.addMemento(new Memento(data));
+        caretaker.addMemento(new Memento(data, count));
     }
 
     private void undo() {
@@ -271,30 +269,14 @@ public class Main extends Application {
             return;
         }
 
-        Iterator<Node> iter = root.getChildren().iterator();
+        Memento memento = caretaker.getMemento();
 
-        while (iter.hasNext()) {
-
-            Node node = iter.next();
-
-            if (node instanceof Ball) {
-                iter.remove();
-            }
+        ArrayList<BallData> data = memento.getState();
+        for (int i = 0; i < balls.size(); i++) {
+            Ball ball = balls.get(i);
+            ball.copy(data.get(i));
         }
 
-        Memento memento = caretaker.getMemento();
-        ArrayList<BallData> data = memento.getState();
-        BallsData ballsData = new BallsData(data);
-        ballsData.setRadius(radius);
-
-        Director director = new Director();
-        BallBuilder builder = new BallBuilder();
-        director.createBalls(builder, ballsData);
-        balls = builder.getResult();
-
-        root.getChildren().addAll(balls);
-
-        // Set the cue ball
-        setCueBall();
+        count = memento.getCount();
     }
 }

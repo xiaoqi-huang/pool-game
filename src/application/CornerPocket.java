@@ -8,12 +8,12 @@ public class CornerPocket extends Polyline implements Pocket {
 
         super();
 
-        getPoints().addAll(new Double[] {
+        getPoints().addAll(
                 x1, y1,
                 x2, y2,
                 x3, y3
-        });
+        );
 
-        setStrokeWidth(5.0);
+        setStrokeWidth(4.0);
     }
 }

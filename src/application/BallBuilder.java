@@ -1,20 +1,20 @@
 package application;
 
-import java.util.ArrayList;
+import javafx.scene.paint.Color;
 
-public class BallBuilder implements Builder {
+public interface BallBuilder {
 
-    private ArrayList<Ball> balls = new ArrayList<Ball>();
+    public void setColour(Color colour);
 
-    public void createBall(BallData data, double radius) {
+    public void setPosX(double posX);
 
-        Ball ball = new Ball(data.getColour(), data.getPositionX(), data.getPositionY(), radius, data.getVelocityX(), data.getVelocityY(), data.getMass());
+    public void setPosY(double posY);
 
-        balls.add(ball);
-    }
+    public void setRadius(double radius);
 
-    public ArrayList<Ball> getResult() {
-        return balls;
-    }
+    public void setVelX(double velX);
 
+    public void setVelY(double velY);
+
+    public void setMass(double mass);
 }

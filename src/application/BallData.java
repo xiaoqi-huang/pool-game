@@ -7,14 +7,16 @@ public class BallData implements Data {
     private Color colour;
     private Double positionX;
     private Double positionY;
+    private double radius;
     private Double velocityX;
     private Double velocityY;
     private Double mass;
 
-    public BallData(Color colour, Double positionX, Double positionY, Double velocityX, Double velocityY, Double mass) {
+    public BallData(Color colour, Double positionX, Double positionY, double radius, Double velocityX, Double velocityY, Double mass) {
         this.colour = colour;
         this.positionX = positionX;
         this.positionY = positionY;
+        this.radius = radius;
         this.velocityX = velocityX;
         this.velocityY = velocityY;
         this.mass = mass;
@@ -24,13 +26,15 @@ public class BallData implements Data {
         this.colour = colour;
     }
 
-    public void setPositionXX(Double positionX) {
+    public void setPositionX(Double positionX) {
         this.positionX = positionX;
     }
 
     public void setPositionY(Double positionY) {
         this.positionY = positionY;
     }
+
+    public void setRadius(double radius) { this.radius = radius; }
 
     public void setVelocityX(Double velocityX) {
         this.velocityX = velocityX;
@@ -55,6 +59,8 @@ public class BallData implements Data {
     public Double getPositionY() {
         return positionY;
     }
+
+    public double getRadius() { return radius; }
 
     public Double getVelocityX() {
         return velocityX;
