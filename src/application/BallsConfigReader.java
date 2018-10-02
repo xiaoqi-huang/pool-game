@@ -9,6 +9,7 @@ import org.json.simple.parser.ParseException;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 
 /**
  * A Configure Reader that only reads data about Balls in a configure file
@@ -26,9 +27,9 @@ public class BallsConfigReader extends ConfigReader {
      * @return BallsData containing all data read from the JSON file
      */
     @Override
-    public Data parse(String path) {
+    public ArrayList<Data> parse(String path) {
 
-        BallsData balls = new BallsData();
+        ArrayList<Data> balls = new ArrayList<Data>();
 
         JSONParser parser = new JSONParser();
 

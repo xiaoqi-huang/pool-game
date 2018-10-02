@@ -12,22 +12,6 @@ import javafx.util.Pair;
  */
 public class PhysicsUtility {
 
-    // A quick usage example for the utility you may use to test it is working correctly
-    public static void main(String[] args) {
-        Point2D posA = new Point2D(10, 20);
-        Point2D velA = new Point2D(2, -2);
-        double massA = 1;
-
-        Point2D posB = new Point2D(15, 15);
-        Point2D velB = new Point2D(-2, 2);
-        double massB = 1;
-
-        Pair<Point2D, Point2D> results = calculateCollision(posA, velA, massA, posB, velB, massB);
-
-        System.out.println("A: " + results.getKey());
-        System.out.println("B: " + results.getValue());
-    }
-
     /**
      * This is an updated collision calculation function for 2 balls colliding in 2D space. You may use it however
      * you wish for your assignment.

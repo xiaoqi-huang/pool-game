@@ -68,7 +68,7 @@ public class Main extends Application {
 
 
         // If the cue ball is not provided, an error will be reported.
-        if (cueBall == null) { end(GameState.ERROR, primaryStage); }
+        if (cueBall == null || table == null) { end(GameState.ERROR, primaryStage); }
 
 
         // Enable hitting the cue ball
@@ -140,11 +140,11 @@ public class Main extends Application {
         // Load configure file
         String path = "config.json";
 
-        TableConfigReader tConfigReader = (TableConfigReader) ConfigReader.getConfigReader("Table");
-        BallsConfigReader bConfigReader = (BallsConfigReader) ConfigReader.getConfigReader("Balls");
+        ConfigReader tConfigReader = ConfigReader.getConfigReader("Table");
+        ConfigReader bConfigReader = ConfigReader.getConfigReader("Balls");
 
-        TableData tData = (TableData) tConfigReader.parse(path);
-        BallsData bData = (BallsData) bConfigReader.parse(path);
+        ArrayList<Data> tData = tConfigReader.parse(path);
+        ArrayList<Data> bData = bConfigReader.parse(path);
 
 
         // Set table
@@ -158,7 +158,7 @@ public class Main extends Application {
         // Create balls (builder design pattern)
         Director director = new Director();
         ConcreteBallBuilder builder = new ConcreteBallBuilder();
-        for (BallData d : bData.getBalls()) {
+        for (Data d : bData) {
             director.constructBall(builder, d);
             Ball ball = builder.getBall();
             balls.add(ball);
@@ -242,12 +242,14 @@ public class Main extends Application {
 
 
     /**
-     * This creates the Table
-     * @param data This is the TableData containing all data needed for creating the Table.
+     * This creates the Table.
+     * @param data This is the ArrayList containing TableData needed for creating the Table.
      * @return A Table
      */
-    private Table getTable(TableData data) {
-        table = new Table(data.getColour(), data.getWidth(), data.getHeight(), data.getFriction());
+    private Table getTable(ArrayList<Data> data) {
+    	// The TableData needed is the first element.
+    	TableData d = (TableData) data.get(0);
+        table = new Table(d.getColour(), d.getWidth(), d.getHeight(), d.getFriction());
         return table;
     }
 
@@ -346,9 +348,7 @@ public class Main extends Application {
      */
     private void undo() {
 
-        if (caretaker.isEmpty()) {
-            return;
-        }
+        if (caretaker.isEmpty()) { return; }
 
         Memento memento = caretaker.getMemento();
 
@@ -374,7 +374,7 @@ public class Main extends Application {
         alert.setHeaderText(null);
         alert.setContentText("Hi!\n" +
                 "This is a simple Pool Game. Try to clear the Table!\n\n" +
-                "Some tips:\n" +
+                "Tips:\n" +
                 "1. The force of the hit is determined by the position and the length of time the mouse is pressed.\n" +
                 "2. You can click the UNDO button to go back to the previous hits.");
         alert.show();
@@ -402,7 +402,7 @@ public class Main extends Application {
                 alert.setContentText("Oops! The cue ball is pocketed!");
                 break;
             case SUCCESS:
-                alert.setContentText("Good game! The Table is cleared!");
+                alert.setContentText("Good game! The table is cleared!");
                 break;
             case ERROR:
                 alert.setContentText("The cue ball cannot be found.");

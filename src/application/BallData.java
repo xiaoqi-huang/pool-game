@@ -3,7 +3,7 @@ package application;
 import javafx.scene.paint.Color;
 
 /**
- * BallData stores all data needed fot creating a Ball
+ * BallData stores all data needed for creating a Ball
  */
 public class BallData implements Data {
 

@@ -13,8 +13,6 @@ public interface BallBuilder {
 
     public void setPositionY(double positionY);
 
-    public void setRadius(double radius);
-
     public void setVelocityX(double velocityX);
 
     public void setVelocityY(double velocityY);

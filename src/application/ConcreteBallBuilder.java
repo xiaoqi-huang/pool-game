@@ -10,7 +10,7 @@ public class ConcreteBallBuilder implements BallBuilder {
     private Color colour;
     private double positionX;
     private double positionY;
-    private double radius;
+    private double radius = 10.0;
     private double velocityX;
     private double velocityY;
     private double mass;
@@ -25,10 +25,6 @@ public class ConcreteBallBuilder implements BallBuilder {
 
     public void setPositionY(double positionY) {
         this.positionY = positionY;
-    }
-
-    public void setRadius(double radius) {
-        this.radius = radius;
     }
 
     public void setVelocityX(double velocityX) {

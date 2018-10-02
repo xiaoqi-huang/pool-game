@@ -1,5 +1,7 @@
 package application;
 
+import java.util.ArrayList;
+
 abstract public class ConfigReader {
 
     public static ConfigReader getConfigReader(String type) {
@@ -15,5 +17,5 @@ abstract public class ConfigReader {
         return reader;
     }
 
-    abstract public Data parse(String path);
+    abstract public ArrayList<Data> parse(String path);
 }

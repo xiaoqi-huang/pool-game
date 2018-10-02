@@ -5,14 +5,15 @@ package application;
  */
 public class Director {
 
-    public void constructBall(BallBuilder ballBuilder, BallData data) {
+    public void constructBall(BallBuilder ballBuilder, Data data) {
 
-        ballBuilder.setColour(data.getColour());
-        ballBuilder.setPositionX(data.getPositionX());
-        ballBuilder.setPositionY(data.getPositionY());
-        ballBuilder.setRadius(data.getRadius());
-        ballBuilder.setVelocityX(data.getVelocityX());
-        ballBuilder.setVelocityY(data.getVelocityY());
-        ballBuilder.setMass(data.getMass());
+    	BallData ball = (BallData) data;
+    	
+        ballBuilder.setColour(ball.getColour());
+        ballBuilder.setPositionX(ball.getPositionX());
+        ballBuilder.setPositionY(ball.getPositionY());
+        ballBuilder.setVelocityX(ball.getVelocityX());
+        ballBuilder.setVelocityY(ball.getVelocityY());
+        ballBuilder.setMass(ball.getMass());
     }
 }
