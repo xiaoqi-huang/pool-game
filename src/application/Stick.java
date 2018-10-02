@@ -63,7 +63,7 @@ public class Stick extends Line {
 
         Timeline timeline = new Timeline(
                 new KeyFrame(
-                        Duration.seconds(0.2 * (velocity / 200)),
+                        Duration.seconds(0.2 - (velocity / 200)),
                         new KeyValue(this.layoutXProperty(), newX),
                         new KeyValue(this.layoutYProperty(), newY)
         ));

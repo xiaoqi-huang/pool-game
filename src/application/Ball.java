@@ -56,7 +56,7 @@ public class Ball extends Circle {
      * @param count This is the number of pocketed Balls.
      * @return MoveResult This is can be POCKETED or NOTPOCKETED.
      */
-    public MoveResult move(Table table, ArrayList<Ball> balls, int count) {
+    BallState move(Table table, ArrayList<Ball> balls, int count) {
 
         // 1. Update the velocity according to the friction
         double acc = table.getFriction() / mass;
@@ -106,7 +106,7 @@ public class Ball extends Circle {
         //    POCKETED -> remove the Ball from the Table -> return
         if (inPocket(table)) {
             pocket(table, count);
-            return MoveResult.POCKETED;
+            return BallState.POCKETED;
         }
 
 
@@ -141,7 +141,7 @@ public class Ball extends Circle {
             }
         }
 
-        return MoveResult.NOTPOCKETED;
+        return BallState.NOTPOCKETED;
     }
 
 
@@ -225,7 +225,7 @@ public class Ball extends Circle {
      * @param table This is the Table where the game runs.
      * @param count This is the number of pocketed Balls.
      */
-    public void pocket(Table table, int count) {
+    private void pocket(Table table, int count) {
         setCenterX(count * 2 * getRadius() + getRadius() + 1);
         setCenterY(table.getHeight() + getRadius() + 3);
     }
@@ -237,7 +237,7 @@ public class Ball extends Circle {
      * @param table This is the Table where the game runs.
      * @return boolean result
      */
-    public boolean isPocketed(Table table) {
+    boolean isPocketed(Table table) {
         return getCenterY() > table.getHeight();
     }
 
@@ -246,7 +246,7 @@ public class Ball extends Circle {
      * This restores the state of the Ball;
      * @param data This is BallData which contains the state the Ball will be restored to.
      */
-    public void restore(BallData data) {
+    void restore(BallData data) {
         setFill(data.getColour());
         setCenterX(data.getPositionX());
         setCenterY(data.getPositionY());

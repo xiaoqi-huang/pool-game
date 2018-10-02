@@ -68,7 +68,7 @@ public class Main extends Application {
 
 
         // If the cue ball is not provided, an error will be reported.
-        if (cueBall == null) { end(State.ERROR, primaryStage); }
+        if (cueBall == null) { end(GameState.ERROR, primaryStage); }
 
 
         // Enable hitting the cue ball
@@ -92,7 +92,7 @@ public class Main extends Application {
 
                     // Update the position & velocity of the Ball
                     // The state of the Ball is returned here.
-                    MoveResult result = ball.move(table, balls, count);
+                    BallState result = ball.move(table, balls, count);
 
 
                     // According to the state of the Ball, this method checks whether the game ends.
@@ -101,7 +101,7 @@ public class Main extends Application {
                             // If the pocketed Ball is the cue ball, then the game fails.
                             if (ball == cueBall) {
                                 try {
-                                    end(State.FAILURE, primaryStage);
+                                    end(GameState.FAILURE, primaryStage);
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }
@@ -113,7 +113,7 @@ public class Main extends Application {
                             // If the table is cleared, then the game succeeds.
                             if (cleared()) {
                                 try {
-                                    end(State.SUCCESS, primaryStage);
+                                    end(GameState.SUCCESS, primaryStage);
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }
@@ -286,10 +286,16 @@ public class Main extends Application {
         button.setPrefSize(80, 10);
         button.setLayoutX(table.getWidth() - 80);
         button.setLayoutY(table.getHeight());
-        button.setStyle("-fx-background-color: beige");
+        button.setStyle("-fx-background-color: beige; -fx-text-fill: black");
 
         // undo() is called when the button is clicked
         button.setOnAction(event -> undo());
+
+        // Add effect to the button
+        // The text turns to white when the mouse hovers on it
+        button.setOnMouseEntered(event -> button.setStyle("-fx-background-color: beige; -fx-text-fill: whitesmoke"));
+        // The text turns to black when the mouse is not on it
+        button.setOnMouseExited(event -> button.setStyle("-fx-background-color: beige; -fx-text-fill: black"));
 
         return button;
     }
@@ -383,7 +389,7 @@ public class Main extends Application {
      * @param stage This is the stage where the game is presented.
      * @throws Exception This is possible to be threw by stop().
      */
-    private void end(State state, Stage stage) throws Exception {
+    private void end(GameState state, Stage stage) throws Exception {
 
         stop();
 
